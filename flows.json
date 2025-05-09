@@ -1,1 +1,169 @@
-[]
+[
+    {
+        "id": "3ec0fc6f6ca0e5cb",
+        "type": "tab",
+        "label": "フロー 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f382cc0e3fa7c910",
+        "type": "camera",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "カメラ撮影",
+        "x": 140,
+        "y": 40,
+        "wires": [
+            [
+                "954ffd963293e429"
+            ]
+        ]
+    },
+    {
+        "id": "7f4b62ee11d75fd0",
+        "type": "inject",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "1分毎に実行",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "1ab97f9b4cd094db"
+            ]
+        ]
+    },
+    {
+        "id": "954ffd963293e429",
+        "type": "change",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "カメラ画像を保存",
+        "rules": [
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 40,
+        "wires": [
+            [
+                "4611894326046e16"
+            ]
+        ]
+    },
+    {
+        "id": "1ab97f9b4cd094db",
+        "type": "change",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "カメラ画像を読み出し",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "image",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "88f5c05e7e031cab"
+            ]
+        ]
+    },
+    {
+        "id": "306d92196d27d543",
+        "type": "debug",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "物体名を出力",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "88f5c05e7e031cab",
+        "type": "cocossd",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "物体検出",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "3b4298b94d21dc31",
+                "306d92196d27d543"
+            ]
+        ]
+    },
+    {
+        "id": "3b4298b94d21dc31",
+        "type": "image",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "アノテーション付き画像を表示",
+        "width": 160,
+        "data": "annotatedInput",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 450,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4611894326046e16",
+        "type": "image",
+        "z": "3ec0fc6f6ca0e5cb",
+        "name": "カメラ画像を表示",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 610,
+        "y": 40,
+        "wires": []
+    }
+]
